@@ -22,10 +22,10 @@ jobs:
           go-version: 1.18
 
       - name: Build
-        run: go build -v lab1/...
+        run: go build -v ./.../lab1
 
       - name: Test
-        run: go test -v lab1/...
+        run: go test -v ./.../lab1
       
   lint:
     name: lint
