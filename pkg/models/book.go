@@ -2,22 +2,23 @@ package models
 
 import (
 	"fmt"
-	"github.com/jinzhu/gorm"
 	"strconv"
+
+	"github.com/jinzhu/gorm"
 )
 
 type Book struct {
 	gorm.Model
 	Name            string `gorm:"column:name" json:"name"`
 	Genre           string `gorm:"column:genre" json:"genre"`
-	Author          string `gorm:"column:author" json:"author"`
+	AuthorID        uint   `gorm:"column:author_id;foreignkey:AuthorID" json:"author_id"`
 	PublicationYear int    `gorm:"column:publication_year" json:"publication_year"`
 }
 
-func GetAllBooks(Genre string, Author string, PublicationYear string) []Book {
+func GetAllBooks(Genre string, AuthorID string, PublicationYear string) []Book {
 	var books []Book
 	newDb := db
-	if len(Genre) == 0 && len(Author) == 0 && len(PublicationYear) == 0 {
+	if len(Genre) == 0 && len(AuthorID) == 0 && len(PublicationYear) == 0 {
 		// All fields are empty, return all books
 		newDb.Find(&books)
 	} else {
@@ -25,8 +26,12 @@ func GetAllBooks(Genre string, Author string, PublicationYear string) []Book {
 		if len(Genre) > 0 {
 			newDb = newDb.Where("genre = ?", Genre)
 		}
-		if len(Author) > 0 {
-			newDb = newDb.Where("author = ?", Author)
+		if len(AuthorID) > 0 {
+			author, err := strconv.ParseInt(AuthorID, 0, 0)
+			if err != nil {
+				fmt.Println("error while parsing")
+			}
+			newDb = newDb.Where("author = ?", author)
 		}
 		if len(PublicationYear) > 0 {
 			year, err := strconv.ParseInt(PublicationYear, 0, 0)

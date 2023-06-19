@@ -3,11 +3,12 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"strconv"
+
 	"github.com/KPI-golang-5/Library/pkg/models"
 	"github.com/KPI-golang-5/Library/pkg/utils"
 	"github.com/gorilla/mux"
-	"net/http"
-	"strconv"
 )
 
 func GetBooks(w http.ResponseWriter, r *http.Request) {
@@ -75,8 +76,8 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	if updateBook.Genre != "" {
 		bookDetails.Genre = updateBook.Genre
 	}
-	if updateBook.Author != "" {
-		bookDetails.Author = updateBook.Author
+	if updateBook.AuthorID != 0 {
+		bookDetails.AuthorID = updateBook.AuthorID
 	}
 	if updateBook.PublicationYear > 0 {
 		bookDetails.PublicationYear = updateBook.PublicationYear
