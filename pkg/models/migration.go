@@ -6,7 +6,7 @@ import (
 
 func Migrate(db *gorm.DB) {
 
-	data := db.AutoMigrate(&Book{}, &Author{})
+	data := db.AutoMigrate(&Book{}, &Author{}, &User{})
 	if data == nil {
 		panic("Error during migration")
 	}

@@ -76,7 +76,7 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	if updateBook.Genre != "" {
 		bookDetails.Genre = updateBook.Genre
 	}
-	if updateBook.AuthorID != 0 {
+	if updateBook.AuthorID > 0 {
 		bookDetails.AuthorID = updateBook.AuthorID
 	}
 	if updateBook.PublicationYear > 0 {

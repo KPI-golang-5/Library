@@ -17,4 +17,10 @@ var RegisterLibraryRoutes = func(router *mux.Router) {
 	router.HandleFunc("/author/{authorId}", controllers.GetAuthorById).Methods("GET")
 	router.HandleFunc("/author/{authorId}", controllers.UpdateAuthor).Methods("PUT")
 	router.HandleFunc("/author/{authorId}", controllers.DeleteAuthor).Methods("DELETE")
+
+	router.HandleFunc("/users", controllers.GetUsers).Methods("GET")
+	router.HandleFunc("/user", controllers.CreateUser).Methods("POST")
+	router.HandleFunc("/user/{userId}", controllers.GetUserById).Methods("GET")
+	router.HandleFunc("/user/{userId}", controllers.UpdateUser).Methods("PUT")
+	router.HandleFunc("/user/{userId}", controllers.DeleteUser).Methods("DELETE")
 }
