@@ -1,9 +1,6 @@
 package models
 
 import (
-	"fmt"
-	"strconv"
-
 	"github.com/jinzhu/gorm"
 )
 
@@ -14,26 +11,10 @@ type User struct {
 	Password string `gorm:"column:password" json:"password"`
 }
 
-func GetAllUsers(Email string, Password string) []User {
+func GetAllUsers() []User {
 	var users []User
 	newDb := db
-	if len(Email) == 0 && len(Password) == 0 {
-		// All fields are empty, return all users
-		newDb.Find(&users)
-	} else {
-		newDb = newDb.Where("1 = 1") // Initial condition to add additional conditions
-		if len(Email) > 0 {
-			newDb = newDb.Where("email = ?", Email)
-		}
-		if len(Password) > 0 {
-			password, err := strconv.ParseInt(Password, 0, 0)
-			if err != nil {
-				fmt.Println("error while parsing")
-			}
-			newDb = newDb.Where("password = ?", password)
-		}
-		newDb.Find(&users)
-	}
+	newDb.Find(&users)
 	return users
 }
 

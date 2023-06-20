@@ -11,9 +11,7 @@ import (
 )
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
-	email := r.URL.Query().Get("email")
-	password := r.URL.Query().Get("password")
-	users := models.GetAllUsers(email, password)
+	users := models.GetAllUsers()
 	res, _ := json.Marshal(users)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
