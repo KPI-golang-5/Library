@@ -20,7 +20,8 @@ func GetAllFavBooks(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetFavBooksByUserID(w http.ResponseWriter, r *http.Request) {
-	userId := r.URL.Query().Get("userId")
+	vars := mux.Vars(r)
+	userId := vars["userId"]
 	id, err := strconv.ParseInt(userId, 0, 0)
 	if err != nil {
 		fmt.Println("error while parsing")
