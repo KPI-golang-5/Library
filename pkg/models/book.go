@@ -17,7 +17,7 @@ type Book struct {
 
 func GetAllBooks(Genre string, AuthorID string, PublicationYear string) []Book {
 	var books []Book
-	newDb := db
+	newDb := Db
 	if len(Genre) == 0 && len(AuthorID) == 0 && len(PublicationYear) == 0 {
 		// All fields are empty, return all books
 		newDb.Find(&books)
@@ -47,18 +47,18 @@ func GetAllBooks(Genre string, AuthorID string, PublicationYear string) []Book {
 
 func GetBookById(ID int64) (*Book, *gorm.DB) {
 	var getBook Book
-	newDb := db.Where("ID=?", ID).Find(&getBook)
+	newDb := Db.Where("ID=?", ID).Find(&getBook)
 	return &getBook, newDb
 }
 
 func (b *Book) CreateBook() *Book {
-	db.NewRecord(b)
-	db.Create(&b)
+	Db.NewRecord(b)
+	Db.Create(&b)
 	return b
 }
 
 func DeleteBook(ID int64) Book {
 	var book Book
-	db.Where("ID=?", ID).Delete(book)
+	Db.Where("ID=?", ID).Delete(book)
 	return book
 }

@@ -5,10 +5,10 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-var db *gorm.DB
+var Db *gorm.DB
 
 func init() {
 	config.Connect()
-	db = config.GetDB()
-	Migrate(db)
+	Db = config.GetDB()
+	Migrate(Db)
 }
