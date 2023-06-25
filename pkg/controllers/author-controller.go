@@ -3,64 +3,76 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	. "github.com/KPI-golang-5/Library/pkg/services"
 	"net/http"
 	"strconv"
 	"time"
 
-	"github.com/KPI-golang-5/Library/pkg/models"
+	. "github.com/KPI-golang-5/Library/pkg/models"
 	"github.com/KPI-golang-5/Library/pkg/utils"
 	"github.com/gorilla/mux"
 )
 
-func GetAuthors(w http.ResponseWriter, r *http.Request) {
+type AuthorController struct {
+	service AuthorService
+}
+
+func RegisterAuthorController(authorService AuthorService) *AuthorController {
+	c := &AuthorController{
+		service: authorService,
+	}
+	return c
+}
+
+func (c AuthorController) GetAuthors(w http.ResponseWriter, r *http.Request) {
 	country := r.URL.Query().Get("country")
-	authors := models.GetAllAuthors(country)
+	authors := c.service.GetAll(country)
 	res, _ := json.Marshal(authors)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 }
 
-func GetAuthorById(w http.ResponseWriter, r *http.Request) {
+func (c AuthorController) GetAuthorById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	authorId := vars["authorId"]
 	id, err := strconv.ParseInt(authorId, 0, 0)
 	if err != nil {
 		fmt.Println("error while parsing")
 	}
-	authorDetails, _ := models.GetAuthorById(id)
+	authorDetails, _ := c.service.GetById(id)
 	res, _ := json.Marshal(authorDetails)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 }
 
-func CreateAuthor(w http.ResponseWriter, r *http.Request) {
-	createAuthor := &models.Author{}
+func (c AuthorController) CreateAuthor(w http.ResponseWriter, r *http.Request) {
+	createAuthor := &Author{}
 	utils.ParseBody(r, createAuthor)
-	b := createAuthor.Create()
+	b := c.service.Create(*createAuthor)
 	res, _ := json.Marshal(b)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 }
 
-func DeleteAuthor(w http.ResponseWriter, r *http.Request) {
+func (c AuthorController) DeleteAuthor(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	authorId := vars["authorId"]
 	id, err := strconv.ParseInt(authorId, 0, 0)
 	if err != nil {
 		fmt.Println("error while parsing")
 	}
-	author := models.DeleteAuthor(id)
+	author := c.service.Delete(id)
 	res, _ := json.Marshal(author)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 }
 
-func UpdateAuthor(w http.ResponseWriter, r *http.Request) {
-	var updateAuthor = &models.Author{}
+func (c AuthorController) UpdateAuthor(w http.ResponseWriter, r *http.Request) {
+	var updateAuthor = &Author{}
 	utils.ParseBody(r, updateAuthor)
 	vars := mux.Vars(r)
 	authorId := vars["authorId"]
@@ -68,7 +80,7 @@ func UpdateAuthor(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("error while parsing")
 	}
-	authorDetails, db := models.GetAuthorById(id)
+	authorDetails, db := c.service.GetById(id)
 	if updateAuthor.FullName != "" {
 		authorDetails.FullName = updateAuthor.FullName
 	}
