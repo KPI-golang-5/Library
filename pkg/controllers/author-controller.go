@@ -38,7 +38,7 @@ func GetAuthorById(w http.ResponseWriter, r *http.Request) {
 func CreateAuthor(w http.ResponseWriter, r *http.Request) {
 	createAuthor := &models.Author{}
 	utils.ParseBody(r, createAuthor)
-	b := createAuthor.CreateAuthor()
+	b := createAuthor.Create()
 	res, _ := json.Marshal(b)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
