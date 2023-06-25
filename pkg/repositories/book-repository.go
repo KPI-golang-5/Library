@@ -3,16 +3,16 @@ package repositories
 import (
 	"fmt"
 	"github.com/KPI-golang-5/Library/pkg/config"
-	"github.com/KPI-golang-5/Library/pkg/models"
+	. "github.com/KPI-golang-5/Library/pkg/models"
 	"github.com/jinzhu/gorm"
 	"strconv"
 )
 
 type BookRepository interface {
-	GetAll(Genre string, AuthorID string, PublicationYear string) []models.Book
-	GetById(ID int64) (*models.Book, *gorm.DB)
-	Create(b *models.Book) *models.Book
-	Delete(ID int64) models.Book
+	GetAll(Genre string, AuthorID string, PublicationYear string) []Book
+	GetById(ID int64) (*Book, *gorm.DB)
+	Create(b *Book) *Book
+	Delete(ID int64) Book
 }
 
 func NewBookRepository(db *gorm.DB) AuthorRepository {
@@ -23,8 +23,8 @@ type bookRepository struct {
 	db *gorm.DB
 }
 
-func (b bookRepository) GetAll(Genre string, AuthorID string, PublicationYear string) []models.Book {
-	var books []models.Book
+func (b bookRepository) GetAll(Genre string, AuthorID string, PublicationYear string) []Book {
+	var books []Book
 	newDb := config.GetDB()
 	if len(Genre) == 0 && len(AuthorID) == 0 && len(PublicationYear) == 0 {
 		// All fields are empty, return all books
@@ -53,20 +53,20 @@ func (b bookRepository) GetAll(Genre string, AuthorID string, PublicationYear st
 	return books
 }
 
-func (b bookRepository) GetById(ID int64) (*models.Book, *gorm.DB) {
-	var getBook models.Book
+func (b bookRepository) GetById(ID int64) (*Book, *gorm.DB) {
+	var getBook Book
 	newDb := config.GetDB().Where("ID=?", ID).Find(&getBook)
 	return &getBook, newDb
 }
 
-func (b bookRepository) Create(book *models.Book) *models.Book {
+func (b bookRepository) Create(book *Book) *Book {
 	config.GetDB().NewRecord(book)
 	config.GetDB().Create(&book)
 	return book
 }
 
-func (b bookRepository) Delete(ID int64) models.Book {
-	var book models.Book
+func (b bookRepository) Delete(ID int64) Book {
+	var book Book
 	config.GetDB().Where("ID=?", ID).Delete(book)
 	return book
 }

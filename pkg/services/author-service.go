@@ -1,16 +1,16 @@
 package services
 
 import (
-	"github.com/KPI-golang-5/Library/pkg/models"
+	. "github.com/KPI-golang-5/Library/pkg/models"
 	"github.com/KPI-golang-5/Library/pkg/repositories"
 	"github.com/jinzhu/gorm"
 )
 
 type AuthorService interface {
-	GetAll(country string) []models.Author
-	GetById(ID int64) (*models.Author, *gorm.DB)
-	Create(author models.Author) *models.Author
-	Delete(ID int64) *models.Author
+	GetAll(country string) []Author
+	GetById(ID int64) (*Author, *gorm.DB)
+	Create(author Author) *Author
+	Delete(ID int64) *Author
 }
 
 func NewAuthorService(authorRepo repositories.AuthorRepository) AuthorService {
@@ -21,21 +21,21 @@ type authorService struct {
 	repository repositories.AuthorRepository
 }
 
-func (a authorService) GetAll(country string) []models.Author {
+func (a authorService) GetAll(country string) []Author {
 	authors := a.repository.GetAll(country)
 	return authors
 }
 
-func (a authorService) GetById(ID int64) (*models.Author, *gorm.DB) {
+func (a authorService) GetById(ID int64) (*Author, *gorm.DB) {
 	author, newDb := a.repository.GetById(ID)
 	return author, newDb
 }
-func (a authorService) Create(author models.Author) *models.Author {
+func (a authorService) Create(author Author) *Author {
 	createdAuthor := a.repository.Create(&author)
 	return createdAuthor
 }
 
-func (a authorService) Delete(ID int64) *models.Author {
+func (a authorService) Delete(ID int64) *Author {
 	deletedAuthor := a.repository.Delete(ID)
 	return deletedAuthor
 }
