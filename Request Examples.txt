@@ -1,0 +1,94 @@
+curl --location 'https://library-api-xpf1.onrender.com/books'
+
+curl --location 'https://library-api-xpf1.onrender.com/books?genre=Non-Fiction&author_id=2&publication_year=2021'
+
+curl --location 'https://library-api-xpf1.onrender.com/book/2'
+
+curl --location 'https://library-api-xpf1.onrender.com/book' \
+--header 'Content-Type: application/json' \
+--data '{
+    "Name":"Adventure",
+	"Genre":"Non-Fiction",
+    "author_id":6,
+    "Publication_year":2020
+}'
+
+curl --location --request PUT 'https://library-api-xpf1.onrender.com/book/3' \
+--header 'Content-Type: application/json' \
+--data '{
+    "Name":"Updated",
+	"Genre":"Fiction",
+    "Author_id":4,
+    "Publication_year":2022
+}'
+
+curl --location --request DELETE 'https://library-api-xpf1.onrender.com/book/3'
+
+
+curl --location 'https://library-api-xpf1.onrender.com/users'
+
+curl --location 'https://library-api-xpf1.onrender.com/user/1'
+
+curl --location 'https://library-api-xpf1.onrender.com/user' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "full_name": "Artem Banderas",
+    "email": "artemius@gmail.com",
+    "password": "12345678"
+}'
+
+curl --location --request PUT 'https://library-api-xpf1.onrender.com/user/1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "full_name": "Antonio Banderas",
+    "email": "antonio@gmail.com",
+    "password": "12345111"
+}'
+
+curl --location --request DELETE 'https://library-api-xpf1.onrender.com/user/1'
+
+
+curl --location 'https://library-api-xpf1.onrender.com/favBooks'
+
+curl --location 'https://library-api-xpf1.onrender.com/favBook/1'
+
+curl --location 'https://library-api-xpf1.onrender.com/favBook' \
+--header 'Content-Type: application/json' \
+--data '{
+    "user_id": 1,
+    "book_id": 4
+}'
+
+curl --location --request PUT 'https://library-api-xpf1.onrender.com/favBook/1' \
+--header 'Content-Type: application/json' \
+--data '{
+    "user_id": 1,
+    "book_id": 3
+}'
+
+curl --location --request DELETE 'https://library-api-xpf1.onrender.com/favBook/1'
+
+
+curl --location 'https://library-api-xpf1.onrender.com/authors'
+
+curl --location 'https://library-api-xpf1.onrender.com/authors?country=Ukraine'
+
+curl --location 'https://library-api-xpf1.onrender.com/author/1'
+
+curl --location 'https://library-api-xpf1.onrender.com/author' \
+--header 'Content-Type: application/json' \
+--data '{
+    "full_name": "Stephen Edwin King",
+    "country": "USA",
+    "birth": "1947-09-21T00:00:00Z"
+}'
+
+curl --location --request PUT 'https://library-api-xpf1.onrender.com/author/1' \
+--header 'Content-Type: application/json' \
+--data '{
+    "full_name": "Updated author",
+    "country": "Some Country",
+    "birth": "1999-01-01T00:00:00Z"
+}'
+
+curl --location --request DELETE 'https://library-api-xpf1.onrender.com/author/1'
