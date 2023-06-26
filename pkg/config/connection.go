@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	_ "github.com/lib/pq"
 )
 
 var (
@@ -10,7 +10,8 @@ var (
 )
 
 func Connect() {
-	d, err := gorm.Open("mysql", "root:librarymaster69@tcp(127.0.0.1:3306)/library?charset=utf8&parseTime=True&loc=Local")
+	dbURL := "postgres://root:x42WtpTNdUWyiI12aDdhtUceIaAp63ru@dpg-cibn5tiip7vnjjnvq5pg-a.frankfurt-postgres.render.com/library_z93u"
+	d, err := gorm.Open("postgres", dbURL)
 	if err != nil {
 		panic(err)
 	}
