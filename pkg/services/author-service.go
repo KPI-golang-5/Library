@@ -39,16 +39,3 @@ func (a authorService) Delete(ID int64) Author {
 	deletedAuthor := a.repository.Delete(ID)
 	return deletedAuthor
 }
-
-/*func mapModelToResp(authorModel *models.Author) *Author {
-
-	a := &Author{
-		Model:    authorModel.Model,
-		FullName: authorModel.FullName,
-		Country:  authorModel.Country,
-		Birth:    authorModel.Birth,
-	}
-
-	return a
-}
-*/
