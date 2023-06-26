@@ -7,9 +7,9 @@ import (
 
 type UserFavBookRepository interface {
 	GetAll() []UserFavBook
-	GetAllByUserID(userID int64) []UserFavBook
-	GetByID(ID int64) (*UserFavBook, *gorm.DB)
-	Create(b *UserFavBook) *UserFavBook
+	GetAllByUserId(userID int64) []UserFavBook
+	GetById(ID int64) (*UserFavBook, *gorm.DB)
+	Create(favBook *UserFavBook) *UserFavBook
 	Delete(favBookID int64) UserFavBook
 }
 
@@ -28,14 +28,14 @@ func (ufb userFavBookRepository) GetAll() []UserFavBook {
 	return favBooks
 }
 
-func (ufb userFavBookRepository) GetAllByUserID(userID int64) []UserFavBook {
+func (ufb userFavBookRepository) GetAllByUserId(userID int64) []UserFavBook {
 	var favBooks []UserFavBook
 	newDb := ufb.db
 	newDb.Where("user_id = ?", userID).Find(&favBooks)
 	return favBooks
 }
 
-func (ufb userFavBookRepository) GetByID(ID int64) (*UserFavBook, *gorm.DB) {
+func (ufb userFavBookRepository) GetById(ID int64) (*UserFavBook, *gorm.DB) {
 	var getFavBookRecord UserFavBook
 	newDb := ufb.db.Where("ID=?", ID).Find(&getFavBookRecord)
 	return &getFavBookRecord, newDb

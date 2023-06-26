@@ -9,7 +9,7 @@ type AuthorRepository interface {
 	GetAll(country string) []Author
 	GetById(ID int64) (*Author, *gorm.DB)
 	Create(author *Author) *Author
-	Delete(ID int64) *Author
+	Delete(ID int64) Author
 }
 
 func NewAuthorRepository(db *gorm.DB) AuthorRepository {
@@ -43,8 +43,8 @@ func (a authorRepository) Create(author *Author) *Author {
 	return author
 }
 
-func (a authorRepository) Delete(ID int64) *Author {
-	var author *Author
+func (a authorRepository) Delete(ID int64) Author {
+	var author Author
 	a.db.Where("ID=?", ID).Delete(author)
 	return author
 }

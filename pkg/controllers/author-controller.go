@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"time"
 
-	. "github.com/KPI-golang-5/Library/pkg/models"
+	"github.com/KPI-golang-5/Library/pkg/models"
 	"github.com/KPI-golang-5/Library/pkg/utils"
 	"github.com/gorilla/mux"
 )
@@ -48,7 +48,7 @@ func (c AuthorController) GetAuthorById(w http.ResponseWriter, r *http.Request) 
 }
 
 func (c AuthorController) CreateAuthor(w http.ResponseWriter, r *http.Request) {
-	createAuthor := &Author{}
+	createAuthor := &models.Author{}
 	utils.ParseBody(r, createAuthor)
 	b := c.service.Create(*createAuthor)
 	res, _ := json.Marshal(b)
@@ -72,7 +72,7 @@ func (c AuthorController) DeleteAuthor(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c AuthorController) UpdateAuthor(w http.ResponseWriter, r *http.Request) {
-	var updateAuthor = &Author{}
+	var updateAuthor = &models.Author{}
 	utils.ParseBody(r, updateAuthor)
 	vars := mux.Vars(r)
 	authorId := vars["authorId"]

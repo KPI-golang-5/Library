@@ -1,32 +1,33 @@
 package routes
 
 import (
-	"github.com/KPI-golang-5/Library/pkg/controllers"
+	. "github.com/KPI-golang-5/Library/pkg/controllers"
 	"github.com/gorilla/mux"
 )
 
-var RegisterLibraryRoutes = func(router *mux.Router) {
-	router.HandleFunc("/books", controllers.GetBooks).Methods("GET")
-	router.HandleFunc("/book", controllers.CreateBook).Methods("POST")
-	router.HandleFunc("/book/{bookId}", controllers.GetBookById).Methods("GET")
-	router.HandleFunc("/book/{bookId}", controllers.UpdateBook).Methods("PUT")
-	router.HandleFunc("/book/{bookId}", controllers.DeleteBook).Methods("DELETE")
+var RegisterLibraryRoutes = func(router *mux.Router, authorController *AuthorController, bookController *BookController,
+	userController *UserController, userFavBookController *UserFavBookController) {
+	router.HandleFunc("/books", bookController.GetBooks).Methods("GET")
+	router.HandleFunc("/book", bookController.CreateBook).Methods("POST")
+	router.HandleFunc("/book/{bookId}", bookController.GetBookById).Methods("GET")
+	router.HandleFunc("/book/{bookId}", bookController.UpdateBook).Methods("PUT")
+	router.HandleFunc("/book/{bookId}", bookController.DeleteBook).Methods("DELETE")
 
 	router.HandleFunc("/authors", authorController.GetAuthors).Methods("GET")
-	router.HandleFunc("/author", controllers.CreateAuthor).Methods("POST")
-	router.HandleFunc("/author/{authorId}", controllers.GetAuthorById).Methods("GET")
-	router.HandleFunc("/author/{authorId}", controllers.UpdateAuthor).Methods("PUT")
-	router.HandleFunc("/author/{authorId}", controllers.DeleteAuthor).Methods("DELETE")
+	router.HandleFunc("/author", authorController.CreateAuthor).Methods("POST")
+	router.HandleFunc("/author/{authorId}", authorController.GetAuthorById).Methods("GET")
+	router.HandleFunc("/author/{authorId}", authorController.UpdateAuthor).Methods("PUT")
+	router.HandleFunc("/author/{authorId}", authorController.DeleteAuthor).Methods("DELETE")
 
-	router.HandleFunc("/users", controllers.GetUsers).Methods("GET")
-	router.HandleFunc("/user", controllers.CreateUser).Methods("POST")
-	router.HandleFunc("/user/{userId}", controllers.GetUserById).Methods("GET")
-	router.HandleFunc("/user/{userId}", controllers.UpdateUser).Methods("PUT")
-	router.HandleFunc("/user/{userId}", controllers.DeleteUser).Methods("DELETE")
+	router.HandleFunc("/users", userController.GetUsers).Methods("GET")
+	router.HandleFunc("/user", userController.CreateUser).Methods("POST")
+	router.HandleFunc("/user/{userId}", userController.GetUserById).Methods("GET")
+	router.HandleFunc("/user/{userId}", userController.UpdateUser).Methods("PUT")
+	router.HandleFunc("/user/{userId}", userController.DeleteUser).Methods("DELETE")
 
-	router.HandleFunc("/favBooks", controllers.GetAllFavBooks).Methods("GET")
-	router.HandleFunc("/favBook", controllers.CreateFavBook).Methods("POST")
-	router.HandleFunc("/favBook/{userId}", controllers.GetFavBooksByUserID).Methods("GET")
-	router.HandleFunc("/favBook/{favBookId}", controllers.UpdateFavBook).Methods("PUT")
-	router.HandleFunc("/favBook/{favBookId}", controllers.DeleteFavBook).Methods("DELETE")
+	router.HandleFunc("/favBooks", userFavBookController.GetAllFavBooks).Methods("GET")
+	router.HandleFunc("/favBook", userFavBookController.CreateFavBook).Methods("POST")
+	router.HandleFunc("/favBook/{userId}", userFavBookController.GetFavBooksByUserId).Methods("GET")
+	router.HandleFunc("/favBook/{favBookId}", userFavBookController.UpdateFavBook).Methods("PUT")
+	router.HandleFunc("/favBook/{favBookId}", userFavBookController.DeleteFavBook).Methods("DELETE")
 }

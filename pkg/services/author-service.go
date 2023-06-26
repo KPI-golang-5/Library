@@ -10,7 +10,7 @@ type AuthorService interface {
 	GetAll(country string) []Author
 	GetById(ID int64) (*Author, *gorm.DB)
 	Create(author Author) *Author
-	Delete(ID int64) *Author
+	Delete(ID int64) Author
 }
 
 func NewAuthorService(authorRepo repositories.AuthorRepository) AuthorService {
@@ -35,7 +35,7 @@ func (a authorService) Create(author Author) *Author {
 	return createdAuthor
 }
 
-func (a authorService) Delete(ID int64) *Author {
+func (a authorService) Delete(ID int64) Author {
 	deletedAuthor := a.repository.Delete(ID)
 	return deletedAuthor
 }
